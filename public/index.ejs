@@ -23,84 +23,84 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      .carousel-img {
-        height: 200px;
+      #timer {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .carousel-item img {
         width: 100%;
-        object-fit: cover;
+        height: auto;
       }
     </style>
   </head>
   <body class="bg-sky-300">
     <nav class="bg-gray-800 p-4 flex items-center justify-between">
-        <div class="block lg:hidden">
-          <button
-            id="nav-toggle"
-            class="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white"
-          >
-            <svg
-              class="fill-current h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
-        <div
-          class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden"
-          id="nav-content"
+      <div class="block lg:hidden">
+        <button
+          id="nav-toggle"
+          class="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white"
         >
-          <div class=" items-center  text-white mr-6">
-            <span class="font-semibold text-xl tracking-tight border-b-2 border-gray-800 pb-1">Cryptocurrency</span>
-
-          </div>
+          <svg
+            class="fill-current h-3 w-3"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden"
+        id="nav-content"
+      >
+        <div class="items-center text-white mr-6">
+          <span
+            class="font-semibold text-xl tracking-tight border-b-2 border-gray-800 pb-1"
+            >Cryptocurrency</span
+          >
+        </div>
 
         <div class="text-sm lg:flex-grow">
           <a
             href="/"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+            >Home</a
           >
-            Home
-          </a>
           <a
             href="/BTC"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
-            <% if (!isAuthenticated) { %>style="display: none;"<% } %>
-          > BTC
-          </a>
+            >BTC</a
+          >
           <a
             href="/history"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
-            <% if (!isAuthenticated) { %>style="display: none;"<% } %>
-          > History
-          </a>
+            >History</a
+          >
           <a
             href="/KryptDashboard"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
-            <% if (!isAuthenticated) { %>style="display: none;"<% } %>
-          > 
-          </a>
+          ></a>
         </div>
+
+        <ul class="flex items-center mr-80">
+          <!-- Добавляем пункт меню для кнопки перевода -->
+          <li class="nav-item">
+            <div id="google_translate_element"></div>
+          </li>
+        </ul>
+
         <div class="text-sm">
           <a
             href="/signup"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
-            <% if (isAuthenticated) { %>style="display: none;"<% } %>
-          > Signup
-          </a>
+            >Signup</a
+          >
           <a
             href="/login"
             class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white"
-            <% if (isAuthenticated) { %>style="display: none;"<% } %>
-          > Login
-          </a>
-          <a
-            href="/logout"
-            class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
-            <% if (!isAuthenticated) { %>style="display: none;"<% } %>
-          > Logout
-          </a>
+            >Login</a
+          >
         </div>
       </div>
     </nav>
@@ -121,72 +121,57 @@
           "
         >
           <div class="container mt-4">
-            <div class="row">
-              <% exchanges.forEach((exchange, exchangeIndex) => { %>
-                <% if(exchangeIndex % 2 === 0) { %>
-                  <div class="w-100"></div>
-                  <!-- This ensures a new row starts after every two exchanges -->
-                <% } %>
-                <div class="col-md-6">
-                  <div class="card mb-3">
-                    <div class="row g-0">
-                      <div class="col-md-12">
-                        <div
-                          id="exchangeCarousel<%= exchangeIndex %>"
-                          class="carousel slide"
-                          data-bs-ride="carousel"
-                        >
-                          <div class="carousel-inner">
-                            <% exchange.links.forEach(function(link, index) { %>
-                              <div
-                                class="carousel-item <%= index === 0 ? 'active' : '' %>"
-                              >
-                                <img
-                                  src="<%= link %>"
-                                  class="d-block w-100 carousel-img"
-                                  alt="..."
-                                />
-                              </div>
-                            <% }); %>
-                          </div>
-                          <button
-                            class="carousel-control-prev"
-                            type="button"
-                            data-bs-target="#exchangeCarousel<%= exchangeIndex %>"
-                            data-bs-slide="prev"
-                          >
-                            <span
-                              class="carousel-control-prev-icon"
-                              aria-hidden="true"
-                            ></span>
-                            <span class="visually-hidden">Previous</span>
-                          </button>
-                          <button
-                            class="carousel-control-next"
-                            type="button"
-                            data-bs-target="#exchangeCarousel<%= exchangeIndex %>"
-                            data-bs-slide="next"
-                          >
-                            <span
-                              class="carousel-control-next-icon"
-                              aria-hidden="true"
-                            ></span>
-                            <span class="visually-hidden">Next</span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="card-body">
-                          <h5 class="card-title">
-                            <%= exchange.name %> (<%= exchange.name_ru %>)
-                          </h5>
-                          <p class="card-text"><%= exchange.description %></p>
-                          <p class="card-text"><%= exchange.description_ru %></p>
-                        </div>
-                      </div>
+            <div class="row justify-content-center">
+              <% exchanges.forEach((exchange, exchangeIndex) => { %> <% if
+              (exchangeIndex % 2 === 0) { %>
+              <div class="col-md-6 mb-4"></div>
+              <!-- This ensures a new row starts after every two exchanges -->
+              <% } %>
+              <div class="col-md-12">
+                <div
+                  id="exchangeCarousel<%= exchangeIndex %>"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <% exchange.links.forEach(function(link, index) { %>
+                    <div
+                      class="carousel-item <%= index === 0 ? 'active' : '' %>"
+                    >
+                      <img
+                        src="<%= link %>"
+                        class="d-block w-100 carousel-img"
+                        alt="..."
+                      />
                     </div>
+                    <% }); %>
                   </div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#exchangeCarousel<%= exchangeIndex %>"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#exchangeCarousel<%= exchangeIndex %>"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
+              </div>
               <% }); %>
             </div>
           </div>
@@ -223,11 +208,76 @@
     </div>
 
     <br />
+    <h1>Timed Quiz</h1>
+    <p>Answer the following questions within the time limit.</p>
+    <div id="timer">Time Remaining: 5:00</div>
+    <div id="quiz-questions">
+      <!-- Quiz questions and options go here -->
+    </div>
+    <button id="submit-btn">Submit Quiz</button>
+
+    <!-- Social media sharing buttons -->
+    <div id="social-sharing-buttons">
+      <button onclick="shareOnFacebook()">Share on Facebook</button>
+      <button onclick="shareOnTwitter()">Share on Twitter</button>
+    </div>
+
     <footer class="bg-gray-800">
       <h3>Murat Alibek SE-2207</h3>
     </footer>
 
     <script>
+      const quizDurationSeconds = 300; // 5 minutes
+      let remainingTime = quizDurationSeconds;
+      const timerDisplay = document.getElementById("timer");
+
+      // Update timer display
+      function updateTimerDisplay() {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        timerDisplay.textContent = `Time Remaining: ${minutes}:${
+          seconds < 10 ? "0" : ""
+        }${seconds}`;
+      }
+
+      // Start countdown timer
+      const timerInterval = setInterval(() => {
+        remainingTime--;
+        updateTimerDisplay();
+
+        // Check if time has run out
+        if (remainingTime <= 0) {
+          clearInterval(timerInterval);
+          // Automatically submit the quiz when time runs out
+          submitQuiz();
+        }
+      }, 1000);
+
+      // Function to submit the quiz
+      function submitQuiz() {
+        // Your logic for submitting the quiz goes here
+        alert("Time is up! Quiz will be submitted.");
+      }
+
+      // Social media sharing functions
+      function shareOnFacebook() {
+        const shareUrl = "https://example.com/quiz-results";
+        const shareText = "I just completed the quiz! Check out my results.";
+        const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          shareUrl
+        )}&quote=${encodeURIComponent(shareText)}`;
+        window.open(facebookShareUrl, "_blank");
+      }
+
+      function shareOnTwitter() {
+        const shareUrl = "https://example.com/quiz-results";
+        const shareText = "I just completed the quiz! Check out my results.";
+        const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+          shareUrl
+        )}&text=${encodeURIComponent(shareText)}`;
+        window.open(twitterShareUrl, "_blank");
+      }
+
       var baseUrl = "https://api.coinranking.com/v2/coins";
       const apiKey =
         "coinranking5da3ce083c9eead6007e8f2799be4b929b5b1dbc23388aa2";
@@ -272,51 +322,17 @@
           console.log(error);
         });
 
-      const { Translate } = require("@google-cloud/translate").v2;
-      require("dotenv").config();
-
-      const CREDENTIALS = require("./youtubedemo-rwcl-0663f7394d57.json");
-
-      const translate = new Translate({
-        credentials: CREDENTIALS,
-        projectId: CREDENTIALS.project_id,
-      });
-
-      const detectLanguage = async (text) => {
-        try {
-          let response = await translate.detect(text);
-          return response[0].language;
-        } catch (error) {
-          console.log(`Error at detectLanguage --> ${error}`);
-          return 0;
-        }
-      };
-
-      detectLanguage("Oggi è lunedì")
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const translateText = async (text, targetLanguage) => {
-        try {
-          let [response] = await translate.translate(text, targetLanguage);
-          return response;
-        } catch (error) {
-          console.log(`Error at translateText --> ${error}`);
-          return 0;
-        }
-      };
-
-      translateText("Oggi è lunedì", "en")
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      // Google Translate код
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );
+      }
     </script>
+    <script
+      type="text/javascript"
+      src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </body>
 </html>
