@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Exchanges - Admin Panel</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="fs-2">Manage Exchanges</div>
+            <br />
+            <a href="/admin" class="btn btn-muted"><-- Back to Admin Panel</a>
+            <br />
+            <br />
+            <button class="btn btn-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#addNewExchange">Add new exchange</button>
+            <br />
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Name (RU)</th>
+                            <th>Description</th>
+                            <th>Description (RU)</th>
+                            <th>Created Date</th>
+                            <th>Links</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% exchanges?.forEach(exchange => { %>
+                        <tr>
+                            <td><%= exchange?.name %></td>
+                            <td><%= exchange?.name_ru %></td>
+                            <td><%= exchange?.description %></td>
+                            <td><%= exchange?.description_ru %></td>
+                            <td><%= exchange?.created_at.toLocaleDateString() %></td>
+                            <td>
+                                <% exchange?.links?.forEach((link, index) => { %>
+                                <a href="<%= link %>" target="_blank">Link<%= index + 1 %></a><br />
+                                <% }); %>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-success" href="/admin/exchanges/edit/<%= exchange?._id %>">Edit</a>
+                                    <a class="btn btn-danger" href="/admin/exchanges/delete/<%= exchange?._id %>">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal fade" id="addNewExchange" tabindex="-1" aria-labelledby="addNewExchangeLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addNewExchangeLabel">Add New Exchange</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="/admin/exchange/add" method="POST">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="exchangeName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="exchangeName" name="name" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exchangeNameRu" class="form-label">Name (RU)</label>
+                                    <input type="text" class="form-control" id="exchangeNameRu" name="name_ru" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exchangeDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="exchangeDescription" name="description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exchangeDescriptionRu" class="form-label">Description (RU)</label>
+                                    <textarea class="form-control" id="exchangeDescriptionRu" name="description_ru"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exchangeLinks" class="form-label">Links</label>
+                                    <input type="text" class="form-control" id="exchangeLinks" name="links" placeholder="Enter links separated by comma" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add Exchange</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

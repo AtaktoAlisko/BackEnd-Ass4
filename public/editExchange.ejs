@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Exchange <%= exchange.name %></title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <br />
+            <br />
+            <h1>Edit Exchange <%= exchange?.name %> | Admin</h1>
+            <br />
+            <a href="/admin/exchanges" class="btn btn-muted"><-- Back to admin exchanges page</a>
+            <br />
+
+            <form action="/admin/exchange/edit/<%= exchange._id %>" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= exchange?.name %>" />
+                </div>
+                <div class="mb-3">
+                    <label for="name_ru" class="form-label">Name (RU)</label>
+                    <input type="text" class="form-control" id="name_ru" name="name_ru" value="<%= exchange?.name_ru %>" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description"><%= exchange?.description %></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="description_ru" class="form-label">Description (RU)</label>
+                    <textarea class="form-control" id="description_ru" name="description_ru"><%= exchange?.description_ru %></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="links" class="form-label">Links (comma-separated)</label>
+                    <input type="text" class="form-control" id="links" name="links" value="<%= exchange?.links?.join(',') %>" />
+                </div>
+                <button type="submit" class="btn btn-primary">Update Exchange</button>
+            </form>
+        </div>
+    </body>
+</html>

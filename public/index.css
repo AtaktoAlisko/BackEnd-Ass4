@@ -1,0 +1,134 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+nav {
+  width: 100%;
+}
+
+form {
+  width: 500px;
+  padding: 40px; /* увеличен внутренний отступ */
+  border-radius: 20px; /* увеличена округлость границ формы */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  background-color: #fff; /* изменен цвет фона формы */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px; /* увеличен отступ снизу заголовка */
+  color: #9333ea; /* изменен цвет текста заголовка */
+}
+
+label {
+  display: block;
+  margin-bottom: 15px; /* увеличен отступ между элементами */
+  color: #555; /* изменен цвет текста меток */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button[type="submit"] {
+  width: calc(100% - 22px);
+  padding: 15px; /* увеличен размер поля ввода и кнопки */
+  margin-bottom: 15px;
+  border: 1px solid #ddd; /* изменен цвет границ */
+  border-radius: 8px; /* увеличена округлость границ */
+  box-sizing: border-box;
+  font-size: 16px; /* увеличен размер шрифта */
+}
+
+input[type="password"] {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #9333ea;
+}
+
+button[type="submit"] {
+  width: 300px;
+  background-color: #9333ea;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #7c1ceb;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  animation: fadeIn 0.5s ease;
+}
+
+.main-container {
+  @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap");
+  :root {
+    --light-cyan: hsl(193, 38%, 86%);
+    --neon-green: hsl(150, 100%, 66%);
+    --grayish-blue: #313a48;
+    --dark-grayish-blue: #202733;
+    --white: white;
+    --body-font: "Manrope", sans-serif;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    box-sizing: border-box;
+    align-items: center;
+    background-color: var(--dark-grayish-blue);
+    font-family: var(--body-font);
+  }
+}
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body class="bg-gray-800 p-4">
+    <nav class="bg-gray-800 p-4">
+      <div class="flex items-center justify-between flex-wrap">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+          <span class="font-semibold text-xl tracking-tight">WeatherApp</span>
+        </div>
+        <div class="block lg:hidden">
+          <button
+            id="nav-toggle"
+            class="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white"
+          >
+            <svg
+              class="fill-current h-3 w-3"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden"
+          id="nav-content"
+        >
+          <div class="text-sm lg:flex-grow">
+            <a
+              href="/"
+              class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+            >
+              Home
+            </a>
+            <a
+              href=" /signup"
+              class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+            >
+              Signup
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <form class="bg-gray-200" id="login-form" action="/login" method="POST">
+      <h1>Login</h1>
+      <label for="username">
+        <i class="fas fa-user"></i>
+        <!-- Иконка пользователя -->
+        Username:
+      </label>
+      <input type="text" id="username" name="username" required />
+      <label for="password">
+        <i class="fas fa-lock"></i>
+        <!-- Иконка замка -->
+        Password:
+        <span
+          class="toggle-password"
+          onclick="togglePasswordVisibility('password')"
+        >
+          <i class="fas fa-eye"></i>
+          <!-- Иконка отображения пароля -->
+        </span>
+      </label>
+      <input type="password" id="password" name="password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function togglePasswordVisibility(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = passwordInput.nextElementSibling.querySelector("i");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Предотвратить отправку формы по умолчанию
+
+          const formData = new FormData(this); // Получить данные формы
+          const userData = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          };
+
+          fetch("/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: userData.username,
+              password: userData.password,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                window.location.href = data.redirectUrl;
+              } else {
+                alert(data.message);
+              }
+            });
+        });
+
+      window.onload = function () {
+        const isAuthenticated = localStorage.getItem("isAuthenticated");
+        if (isAuthenticated) {
+          document.querySelector('a[href="/login"]').style.display = "none";
+          document.querySelector('a[href="/signup"]').style.display = "none";
+        } else {
+          document.querySelector('a[href="/login"]').style.display = "block";
+          document.querySelector('a[href="/signup"]').style.display = "block";
+        }
+      };
+    </script>
+  </body>
+</html>

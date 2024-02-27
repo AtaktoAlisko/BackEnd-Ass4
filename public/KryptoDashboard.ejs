@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTC</title>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.2.0/ol.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto; 
+        }
+    </style>
+</head>
+<body class="bg-sky-300">
+    <nav class="bg-gray-800 p-4">
+        <div class="flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <span class="font-semibold text-xl tracking-tight">Bitcoin</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden" id="nav-content">
+                <div class="text-sm lg:flex-grow">
+                    <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                        Home
+                    </a>
+                    <a href="/BTC" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4" <% if (!isAuthenticated) { %>style="display: none;"<% } %>>
+                        BTC
+                    </a>
+                    <a href="/history" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4" <% if (!isAuthenticated) { %>style="display: none;"<% } %>>
+                        History
+                    </a>
+                    
+                </div>
+                <div class="text-sm">
+                    <a href="/signup" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4" <% if (isAuthenticated) { %>style="display: none;"<% } %>>
+                        Signup
+                    </a>
+                    <a href="/login" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white" <% if (isAuthenticated) { %>style="display: none;"<% } %>>
+                        Login
+                    </a>
+                    <a href="/logout" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4" <% if (!isAuthenticated) { %>style="display: none;"<% } %>>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <select id="language-select" style="width: 125px;" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="kk">Қазақша</option>
+    </select>
+    <h3 id="city-label"></h3>
+
+    <h3>Input BTC wallet (Example: bc1qtzrgc6sq5c3hgktlg7dk38ytgdm8fnjhnj9khl)</h3>
+    <div class="input-container mt-8">
+        <input type="text" placeholder="Write BTC Wallet" id="wallet-select">
+        <button class="bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-500 hover:to-yellow-500 py-2 px-4 rounded shadow-lg hover:shadow-cyan-800 cursor-pointer text-lg" onclick="checkBTCWallet()">check it!</button>
+    </div>
+    <br>
+    <br>
+    <div class="table">
+        <nav class="navbar fixed-top bg-gray-900">
+            <div class="container mx-auto flex justify-between items-center">
+              <div>
+                <a class="navbar-brand text-white">Krypto Dashboard</a>
+              </div>
+              <div>
+                <form class="flex items-center">
+                  <input id="search-input" class="form-input mr-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+          
+          
+    
+        <table class="table border-collapse mt-20">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">UUID</th>
+                    <th class="px-4 py-2">Btc Price</th>
+                    <th class="px-4 py-2">Rank</th>
+                    <th class="px-4 py-2">Tier</th>
+                    <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">Price</th>
+                    <th class="px-4 py-2">Symbol</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+                <tr class="bg-amber-400">
+                    <td>Total received(SAT)</td>
+                    <td id="wallet-recv">no data</td>
+                </tr>
+                <tr class="bg-amber-500">
+                    <td>Total sent(SAT)</td>
+                    <td id="wallet-sent">no data</td>
+                </tr>
+                <tr class="bg-amber-600">
+                    <td>Balance(SAT)</td>
+                    <td id="wallet-bal">no data</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+
+    <footer class="bg-gray-800">
+        <h3>Murat Alibek SE-2207</h3>
+    </footer>
+
+</body>
+<script>
+    var baseUrl = "https://api.coinranking.com/v2/coins";
+const apiKey = "coinranking5da3ce083c9eead6007e8f2799be4b929b5b1dbc23388aa2";
+
+var apiUrl = `${baseUrl}`;
+console.log(apiUrl);
+
+fetch(`${baseUrl}`, {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    "X-My-Custom-Header": `${apiKey}`,
+  },
+  mode: "cors", // Add this line to set CORS mode
+})
+  .then((response) => {
+    if (response.ok) {
+      response.json().then((json) => {
+        console.log(json.data);
+        let coinsData = json.data.coins;
+
+        if (coinsData.length > 0) {
+          var cryptoCoin = "";
+        }
+        //For Loop Starts
+        coinsData.forEach((coin) => {
+          cryptoCoin += "<tr>";
+          cryptoCoin += `<td> ${coin.uuid} </td>`;
+          cryptoCoin += `<td> ${coin.btcPrice} </td>`;
+          cryptoCoin += `<td> ${coin.rank}</td>`;
+          cryptoCoin += `<td> ${coin.tier} </td>`;
+          cryptoCoin += `<td> ${coin.name}</td>`;
+          cryptoCoin += `<td> $${Math.round(coin.price)} Billion</td>`;
+          cryptoCoin += `<td> ${coin.symbol}</td>`;
+          ("<tr>");
+        });
+        document.getElementById("data").innerHTML = cryptoCoin;
+      });
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+</script>
+</html>

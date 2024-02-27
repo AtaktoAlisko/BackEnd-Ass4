@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request History</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Request History</h1>
+    <ul>
+    <% for(let entry of history) { %>
+        <li>
+            <strong>Request Type:</strong> <%= entry.requestType %><br>
+            <strong>Request Data:</strong> <%= JSON.stringify(entry.requestData) %><br>
+            <strong>Status Code:</strong> <%= entry.statusCode %><br>
+            <strong>Timestamp:</strong> <%= entry.timestamp %>
+        </li>
+    <% } %>
+    </ul>
+    <a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,125 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin-top: 20px;
+  text-align: center; /* Center align the heading */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+}
+
+.input-container input {
+  width: 300px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.input-container button {
+  width: 150px;
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.input-container,
+.weather-container,
+.wallet-container,
+.button-container {
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  width: 300px; /* Adjust the width as needed */
+}
+
+.wallet-container,
+.weather-container {
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  width: 1000px; /* Set a fixed width for the container */
+  padding: 10px; /* Add padding */
+}
+
+.input-container,
+.wallet-container {
+  margin-bottom: 20px; /* Add bottom margin to create space */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  border: 2px solid #000; /* Set border style and size */
+}
+
+table th,
+table td {
+  border: 2px solid #000; /* Set border style and size */
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+#map {
+  height: 500px;
+  margin-top: 20px;
+}
+
+.table {
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%; /* Adjust the width as needed */
+  border-collapse: collapse; /* Collapse table borders */
+  border: 2px solid #000; /* Set border style and size for the table */
+  background-color: #e6f7ff; /* Set a brighter background color */
+}
+
+.table th,
+.table td {
+  border: 2px solid #000; /* Set border style and size for table cells */
+  padding: 12px; /* Adjust cell padding */
+  text-align: left;
+}
+
+.table th {
+  background-color: #b3e0ff; /* Set a brighter background color for table header */
+  font-weight: bold; /* Make table header text bold */
+}
+
+.table tr:nth-child(even) {
+  background-color: #cce5ff; /* Set a brighter background color for even rows */
+}
+
+.table tr:hover {
+  background-color: #99d6ff; /* Set a brighter background color for row hover effect */
+}
+
+footer {
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  bottom: 0;
+  width: 100%;
+}
+.navbar {
+  padding: 1rem 2rem; /* Adjust padding as needed */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
